@@ -33,7 +33,7 @@ bool processEvents()
                     case SDL_WINDOWEVENT_MAXIMIZED: {
                         SDL_RestoreWindow(Engine.window);
                         SDL_SetWindowFullscreen(Engine.window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-                        SDL_ShowCursor(SDL_FALSE);
+                        SDL_ShowCursor(0);
                         Engine.isFullScreen = true;
                         break;
                     }
@@ -128,25 +128,25 @@ bool processEvents()
 #if RETRO_USING_SDL1
                             Engine.windowSurface = SDL_SetVideoMode(SCREEN_XSIZE * Engine.windowScale, SCREEN_YSIZE * Engine.windowScale, 16,
                                                                     SDL_HWSURFACE | SDL_FULLSCREEN);
-                            SDL_ShowCursor(SDL_FALSE);
+                            SDL_ShowCursor(0);
 #endif
 
 #if RETRO_USING_SDL2
                             SDL_RestoreWindow(Engine.window);
                             SDL_SetWindowFullscreen(Engine.window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-                            SDL_ShowCursor(SDL_FALSE);
+                            SDL_ShowCursor(0);
 #endif
                         }
                         else {
 #if RETRO_USING_SDL1
                             Engine.windowSurface =
                                 SDL_SetVideoMode(SCREEN_XSIZE * Engine.windowScale, SCREEN_YSIZE * Engine.windowScale, 16, SDL_HWSURFACE);
-                            SDL_ShowCursor(SDL_FALSE);
+                            SDL_ShowCursor(0);
 #endif
 
 #if RETRO_USING_SDL2
                             SDL_SetWindowFullscreen(Engine.window, false);
-                            SDL_ShowCursor(SDL_TRUE);
+                            SDL_ShowCursor(0);
                             SDL_SetWindowSize(Engine.window, SCREEN_XSIZE * Engine.windowScale, SCREEN_YSIZE * Engine.windowScale);
                             SDL_SetWindowPosition(Engine.window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
                             SDL_RestoreWindow(Engine.window);

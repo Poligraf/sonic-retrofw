@@ -82,7 +82,7 @@ int InitRenderDevice()
     if (Engine.startFullScreen) {
         SDL_RestoreWindow(Engine.window);
         SDL_SetWindowFullscreen(Engine.window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-        SDL_ShowCursor(SDL_FALSE);
+        SDL_ShowCursor(0);
         Engine.isFullScreen = true;
     }
 
@@ -114,6 +114,7 @@ int InitRenderDevice()
 	Engine.screenBuffer = SDL_SetVideoMode(SCREEN_XSIZE * Engine.windowScale, SCREEN_YSIZE * Engine.windowScale, 16, SDL_HWSURFACE);
 	Engine.frameBuffer = (uint16_t*)Engine.screenBuffer->pixels;
 #else
+    SDL_ShowCursor(0);
     Engine.windowSurface = SDL_SetVideoMode(SCREEN_XSIZE * Engine.windowScale, SCREEN_YSIZE * Engine.windowScale, 32, SDL_HWSURFACE);
     if (!Engine.windowSurface) {
         printLog("ERROR: failed to create window!\nerror msg: %s", SDL_GetError());
@@ -140,7 +141,7 @@ int InitRenderDevice()
     if (Engine.startFullScreen) {
         Engine.windowSurface =
             SDL_SetVideoMode(SCREEN_XSIZE * Engine.windowScale, SCREEN_YSIZE * Engine.windowScale, 16, SDL_HWSURFACE | SDL_FULLSCREEN);
-        SDL_ShowCursor(SDL_FALSE);
+        SDL_ShowCursor(0);
         Engine.isFullScreen = true;
     }
 #endif

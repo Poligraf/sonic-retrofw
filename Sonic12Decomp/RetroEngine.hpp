@@ -72,12 +72,12 @@ typedef unsigned int uint;
 
 #ifdef OPENDINGUX
 #define DEFAULT_SCREEN_XSIZE 320
-#define DEFAULT_FULLSCREEN   true
+#define DEFAULT_FULLSCREEN   false
 // set this to 1 (integer scale) for other platforms that don't support bilinear and don't have an even screen size
 #define RETRO_DEFAULTSCALINGMODE 1
 #else
 #define DEFAULT_SCREEN_XSIZE 320
-#define DEFAULT_FULLSCREEN   true
+#define DEFAULT_FULLSCREEN   false
 #define RETRO_USING_MOUSE
 #define RETRO_USING_TOUCH
 // set this to 1 (integer scale) for other platforms that don't support bilinear and don't have an even screen size
