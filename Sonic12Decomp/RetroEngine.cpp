@@ -141,7 +141,7 @@ bool processEvents()
 #if RETRO_USING_SDL1
                             Engine.windowSurface =
                                 SDL_SetVideoMode(SCREEN_XSIZE * Engine.windowScale, SCREEN_YSIZE * Engine.windowScale, 16, SDL_HWSURFACE);
-                            SDL_ShowCursor(SDL_TRUE);
+                            SDL_ShowCursor(SDL_FALSE);
 #endif
 
 #if RETRO_USING_SDL2
@@ -490,7 +490,7 @@ void RetroEngine::Run()
 
         RenderRenderDevice();
         //frameStep = false;
-    
+
 
     }
 
