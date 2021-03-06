@@ -143,7 +143,7 @@ bool processEvents()
                                 SDL_SetVideoMode(SCREEN_XSIZE * Engine.windowScale, SCREEN_YSIZE * Engine.windowScale, 16, SDL_HWSURFACE);
                             SDL_ShowCursor(SDL_TRUE);
 #endif
-                        
+
 #if RETRO_USING_SDL2
                             SDL_SetWindowFullscreen(Engine.window, false);
                             SDL_ShowCursor(SDL_TRUE);
@@ -445,27 +445,53 @@ void RetroEngine::Init()
 void RetroEngine::Run()
 {
     uint frameStart, frameEnd = SDL_GetTicks();
-    float frameDelta = 0.0f;
+    float frameDelta = 0.f;
+    float msPerFrame = 1000.f / 59.94f;
+    unsigned int frameTime = 0;
+    bool fullspeed = false;
 
     while (running) {
         frameStart = SDL_GetTicks();
-        frameDelta = frameStart - frameEnd;
+        frameTime = frameStart - frameEnd;
+        frameEnd = frameStart;
 
-        if (frameDelta < 1000.0f / (float)refreshRate)
-            SDL_Delay(1000.0f / (float)refreshRate - frameDelta);
+        if (frameTime <= ceil(msPerFrame)) {
+           fullspeed = true;
+         } else {
+                     //printf("Lag: %d\n", frameTime);
+                     frameDelta += frameTime;
+
+                     if (frameDelta > msPerFrame * 4)
+                         frameDelta = msPerFrame * 4;
+                 }
+
+                 if (frameDelta < 1000.0f / (float)refreshRate)
+                     SDL_Delay(1000.0f / (float)refreshRate - frameDelta);
 
         frameEnd = SDL_GetTicks();
 
         running = processEvents();
-        for (int s = 0; s < gameSpeed; ++s) {
+        for (; fullspeed == true || frameDelta >= msPerFrame; frameDelta -= msPerFrame) {
             ProcessInput();
 
-            if (!masterPaused || frameStep) {
+            if (!masterPaused/* || frameStep*/) {
                 ProcessNativeObjects();
-                RenderRenderDevice();
-                frameStep = false;
+                //RenderRenderDevice();
+                //frameStep = false;
             }
+
+            if (fullspeed) break;
         }
+
+        if (fullspeed) {
+            frameDelta = 0;
+            fullspeed = false;
+        }
+
+        RenderRenderDevice();
+        //frameStep = false;
+    
+
     }
 
     ReleaseAudioDevice();

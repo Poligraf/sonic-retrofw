@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Sonic
+Comment=Sonic 1 and 2
+Exec=sonic2013 %f
+Icon=icon
+Terminal=false
+Type=Application
+Categories=games;
+X-OD-NeedsDownscaling=true
